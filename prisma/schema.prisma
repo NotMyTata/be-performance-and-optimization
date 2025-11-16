@@ -5,7 +5,7 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../generated/prisma"
 }
 
@@ -14,21 +14,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model WNI {
+model Wni {
   id          Int       @id @default(autoincrement())
-  nik         String    @db.VarChar(16)
+  nik         String    @unique @db.VarChar(16)
   name        String    @db.VarChar(255)
   vehicle     Vehicle   @relation(fields: [vehicleId], references: [id])
   vehicleId   Int
 }
 
 model Vehicle {
-  id      Int     @id @default(autoincrement())
-  name    String    @db.VarChar(255)
+  id      Int           @id @default(autoincrement())
+  name    String        @db.VarChar(255)
   type    VehicleType
-  plate   String    @db.VarChar(8)
-  exp     DateTime
-  owner   WNI[]
+  plate   String        @unique @db.VarChar(8)
+  owner   Wni[]
 }
 
 enum VehicleType {
