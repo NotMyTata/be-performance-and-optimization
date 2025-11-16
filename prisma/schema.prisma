@@ -16,7 +16,7 @@ datasource db {
 
 model Wni {
   id          Int       @id @default(autoincrement())
-  nik         String    @unique @db.VarChar(16)
+  nik         String    @unique @db.Char(16)
   name        String    @db.VarChar(255)
   vehicle     Vehicle   @relation(fields: [vehicleId], references: [id])
   vehicleId   Int
@@ -30,7 +30,30 @@ model Vehicle {
   owner   Wni[]
 }
 
+model Wni_index {
+  id          Int             @id @default(autoincrement())
+  nik         String          @unique @db.Char(16)
+  name        String          @db.VarChar(255)
+  vehicle     Vehicle_index   @relation(fields: [vehicleId], references: [id])
+  vehicleId   Int
+
+  @@index([vehicleId])
+}
+
+model Vehicle_index {
+  id      Int           @id @default(autoincrement())
+  name    String        @db.VarChar(255)
+  type    VehicleType
+  plate   String        @unique @db.VarChar(8)
+  owner   Wni_index[]
+
+  @@index([type])
+}
+
 enum VehicleType {
   Car
   Motorcycle
+  Bicycle
+  Boat
+  Plane
 }

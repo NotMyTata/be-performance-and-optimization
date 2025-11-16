@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "Wni" ALTER COLUMN "nik" SET DATA TYPE CHAR(16);
+
+-- AlterTable
+ALTER TABLE "Wni_index" ALTER COLUMN "nik" SET DATA TYPE CHAR(16);
